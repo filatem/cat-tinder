@@ -24,6 +24,7 @@ class NewCat extends Component {
     }
 
     render() {
+      let { form } = this.state
       return (
           <Container>
               <Row>
@@ -35,7 +36,7 @@ class NewCat extends Component {
                               type="text"
                               name="name"
                               onChange={this.handleChange}
-                              value={this.state.form.name}
+                              value={form.name}
                           />
                           <Form.Label id="age">Age</Form.Label>
                           <Form.Control
@@ -43,7 +44,7 @@ class NewCat extends Component {
                               type="number"
                               name="age"
                               onChange={this.handleChange}
-                              value={this.state.form.age}
+                              value={form.age}
                           />
                           <Form.Label id="enjoys">Enjoys</Form.Label>
                           <Form.Control
@@ -51,9 +52,9 @@ class NewCat extends Component {
                               type="text"
                               name="enjoys"
                               onChange={this.handleChange}
-                              value={this.state.form.enjoys}
+                              value={form.enjoys}
                           /><br/>
-                          <Button onClick={this.submitCat} variant="btn btn-outline-success" type="submit" id="submit">Create Cat Profile</Button>
+                          <Button onClick={this.submitCat} variant="btn btn-outline-success" id="submit">Create Cat Profile</Button>
                       </Form>
                   </Col>
               </Row>

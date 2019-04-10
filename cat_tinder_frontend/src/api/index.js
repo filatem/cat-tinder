@@ -1,6 +1,6 @@
 const BASE = 'http://localhost:3000'
 
-let getCats = function() {
+let getCats = () => {
 	return fetch(BASE + '/cats')
 		.then((resp) => {
 			let json = resp.json()
@@ -8,7 +8,7 @@ let getCats = function() {
 		})
 }
 
-let createCat = function(cat) {
+let createCat = cat => {
 	return fetch(BASE + '/cats', {
 		body: JSON.stringify(cat),  //stringify the json for fetch
 		headers: {  //sending JSON, expect JSON back; info about the content
@@ -22,19 +22,33 @@ let createCat = function(cat) {
 		})
 }
 
-let deleteCat = function(cat) {
-	return fetch(`${BASE}/cats/${cat.id}`, {
-		body: JSON.stringify(cat),
+let deleteCat = id => {
+	return fetch(`${BASE}/cats/${id}`, {
+
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		method: "Delete"
+		method: "DELETE"
 	})
 		.then((resp) => {
 			let json = resp.json()
 			return json
 		})
 }
+
+let updateCat = id => {
+	return fetch(`${BASE}/cats/${id}`, {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: "PUT"
+	})
+		.then((resp) => {
+			let json = resp.json()
+			return json
+		})
+}
+
 
 export  {
 	getCats
@@ -46,4 +60,8 @@ export  {
 
 export  {
 	deleteCat
+}
+
+export  {
+	updateCat
 }

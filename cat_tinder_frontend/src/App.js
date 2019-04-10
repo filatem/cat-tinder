@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { getCats, createCat, deleteCat } from './api'
+import { getCats, createCat, deleteCat, updateCat } from './api'
 import Header from './components/Header'
 import Cats from './components/Cats'
 import NewCat from './components/NewCat'
@@ -14,11 +14,15 @@ class App extends Component {
 	}
 
   	componentWillMount() {
-  		getCats()
-  		.then(APIcats => {
-  			this.setState({ cats: APIcats })
-  		})
+  		this.showCat()
   	}
+
+    showCat = () => {
+      getCats()
+    .then(APIcats => {
+      this.setState({ cats: APIcats })
+    })
+  }
 
     handleNewCat = (newCatInfo) => {
     	createCat(newCatInfo)
@@ -30,23 +34,33 @@ class App extends Component {
         })
     }
 
-    handleDelete = (cat) => {
-        deleteCat(cat)
+    handleDelete = (id) => {
+        deleteCat(id)
         .then(catGone => {
             console.log("Cat gone. Goodbye ", catGone);
-            const  { cats } = this.state
-            cats.splice(catGone, 1)
-            this.setState({ cats: cats })
+            this.showCat()
         })
     }
+
+    handleUpdate = (id) => {
+    	updateCat(id)
+        .then(editCat => {
+            console.log("SUCCESS! Edit Cat: ", editCat);
+            this.showCat()
+          })
+      }
 
     render() {
         let { cats } = this.state
         return (
         	<div>
         		<Header />
-        		<Cats cats={cats} handleDelete={this.handleDelete}/>
-        		<NewCat addCat={this.handleNewCat}/>
+        		<Cats
+              cats={cats}
+              handleDelete={this.handleDelete}
+              handleUpdate={this.handleUpdate}
+            />
+        		<NewCat addCat={this.handleNewCat} />
         	</div>
         );
     }
